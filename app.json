@@ -1,12 +1,34 @@
 {
   "expo": {
-    "name": "presenca-app",
-    "slug": "presenca-app",
+    "name": "uz-presenca-app",
+    "slug": "upa",
     "version": "1.0.0",
-    "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  },
-  "name": "presenca-app"
-}
+    "orientation": "portrait",
+    "icon": "./public/img/loading-icon.png",
+    "splash": {
+      "image":"./public/img/loading-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0275d8"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pagepro.testpublishapp",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./public/img/loading-icon.png",
+        "backgroundColor": "#0275d8"
+      },
+      "package": "com.pagepro.testpublishapp",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./public/img/loading-icon.png"
+    }
+  }
+ }
