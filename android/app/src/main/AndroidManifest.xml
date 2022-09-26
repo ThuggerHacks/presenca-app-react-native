@@ -7,6 +7,17 @@
   <!-- These require runtime permissions on M -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+  <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+  <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
+  <!-- Added permissions -->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+  <!-- Optional permissions -->
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
   <!-- END OPTIONAL PERMISSIONS -->
 
   <queries>
