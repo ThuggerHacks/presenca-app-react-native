@@ -10,7 +10,8 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import { TextInput } from "react-native-gesture-handler";
 import { signInWithApi } from "../service/login.service";
 import { append } from "../utils/Storage";
-
+import   AsyncStorage from "@react-native-async-storage/async-storage"
+import { stringMd5 } from "react-native-quick-md5";
 
 
 export const LoginPage = ({ navigation }) => {
@@ -37,24 +38,40 @@ export const LoginPage = ({ navigation }) => {
 
     const loginUser = async () => {
  
-        // props.navigation.navigate('FLayout',{screen:'Home'})
-        // console.log(res)
-        // setError(res);
         if(email.trim().length > 0 && password.trim().length > 0 ){
 
-            const user = await signInWithApi(email,password);
-            
-            if(user.data){
-                if(user.data.error){
-                    setError(user.data.error);
+            try{
+                    //online mode
+                const user = await signInWithApi(email,password);
+                
+                if(user.data){
+                    if(user.data.error){
+                        setError(user.data.error);
+                    }else{
+                        await AsyncStorage.setItem("user",JSON.stringify(user.data.data));
+                        append(user.data.data)
+                        navigation.push("Principal");
+                        setError("");
+                        
+                    }
                 }else{
-                    append(user.data.data)
-                    navigation.push("Principal");
-                    setError("");
-                    
+                //offline mode
+
+                    if(await AsyncStorage.getItem("user") != undefined && await AsyncStorage.getItem("user") != null){
+                        const data = JSON.parse(await AsyncStorage.getItem("user"));
+
+                        if(data.email_docente == email && data.senha_docente == stringMd5(password)){
+                                append(data);
+                                navigation.push("Principal");
+                                setError("");
+                        }else{
+                            setError("Dados incorrectos");
+                        }
+                        
+                    }
                 }
-            }else{
-                setError("Houve um erro");
+            }catch( error ){
+                console.log(error)
             }
 
         }else{
@@ -65,7 +82,7 @@ export const LoginPage = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor={"#0275d8"} />
+            <StatusBar backgroundColor={"#0275d8"} translucent={true}/>
             <View style={styles.div}>
                 <View style={styles.divLogo}>
                     <Image source={logo} style={styles.logo}  />

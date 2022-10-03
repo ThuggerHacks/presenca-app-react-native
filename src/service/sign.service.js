@@ -1,10 +1,15 @@
 import axios from "axios"
 import { ENDPOINT } from "../utils/endpoints"
 
-export const signPresenceWithApi = async(user_id) => {
+export const signPresenceWithApi = async(user_id,offline = null) => {
 
     try{
-        const sign = await axios.post(ENDPOINT + '/docente/sign',{id:user_id});
+        const sign = await axios.post(ENDPOINT + '/docente/sign',{
+            id:user_id,
+            date:offline.date != null ?offline.date:null,
+            entrada:offline.entrada != null ?offline.entrada:null,
+            saida:offline.saida != null ?offline.saida:null
+        });
         return sign;
     }catch( error ){
         return error;
@@ -41,10 +46,10 @@ export const searchData = async(date_,id_) => {
 }
 
 
-export const postWorkDuraion = async(id) => {
+export const postWorkDuraion = async(id,time = null) => {
         
     try{
-        const job = await axios.post(ENDPOINT+"/work/"+id);
+        const job = await axios.post(ENDPOINT+"/work/"+id,{time:time != null ?time.time:null});
         return job;
     }catch( error ){
         return error;
